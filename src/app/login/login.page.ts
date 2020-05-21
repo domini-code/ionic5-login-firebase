@@ -1,5 +1,6 @@
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  constructor(private authSvc: AuthService) {}
+  constructor(private authSvc: AuthService, private router: Router) {}
 
   ngOnInit() {}
 
@@ -15,8 +16,8 @@ export class LoginPage implements OnInit {
     try {
       const user = await this.authSvc.login(email.value, password.value);
       if (user) {
-        //Todo: CheckEmail
-        console.log('User->', user);
+        const isVerified = this.authSvc.isEmailVerified(user);
+        this.redirectUser(isVerified);
       }
     } catch (error) {
       console.log('Error->', error);
@@ -27,11 +28,19 @@ export class LoginPage implements OnInit {
     try {
       const user = await this.authSvc.loginGoogle();
       if (user) {
-        // Todo: CheckEmail
-        console.log('User->', user);
+        const isVerified = this.authSvc.isEmailVerified(user);
+        this.redirectUser(isVerified);
       }
     } catch (error) {
       console.log('Error->', error);
+    }
+  }
+
+  private redirectUser(isVerified: boolean): void {
+    if (isVerified) {
+      this.router.navigate(['admin']);
+    } else {
+      this.router.navigate(['verify-email']);
     }
   }
 }

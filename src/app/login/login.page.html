@@ -19,13 +19,27 @@
         <ion-button type="submit" (click)="onLogin(email, password)" expand="block">Login</ion-button>
       </ion-col>
     </ion-row>
-    <span class="divider line one-line"> or </span>
     <ion-row>
       <ion-col>
-        <ion-button type="submit" color="danger" (click)="onLoginGoogle(email, password)" expand="block"
+        <p class="ion-text-end">
+          <a routerLink="/forgot-password">Forgot password? </a>
+        </p>
+      </ion-col>
+    </ion-row>
+    <span class="center-span"> or </span>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="danger" (click)="onLoginGoogle()" expand="block"
           >Login with Google
         </ion-button>
       </ion-col>
     </ion-row>
   </form>
+  <ion-row>
+    <ion-col>
+      <p class="ion-text-end">
+        <a routerLink="/register">Create an account </a>
+      </p>
+    </ion-col>
+  </ion-row>
 </ion-content>
